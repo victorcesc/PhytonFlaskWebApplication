@@ -1,6 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import FlaskForm
 from werkzeug.security import generate_password_hash, check_password_hash
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired
 
 SECRET_KEY = 'aula de BCD - string aleatoria'
 
@@ -32,8 +35,10 @@ class Usuario(db.Model):
         return check_password_hash(password)
 
 
-
-
+class LoginForm(FlaskForm):
+    username = StringField('Nome do usuario',validators=[DataRequired()])
+    password = PasswordField('Senha', validators = [DataRequired()])
+    submit = SubmitField('Entrar')
 
 
 @app.route('/')
